@@ -74,30 +74,26 @@ class Clock extends Component {
             this.state.minutes*60 +
             this.state.seconds) * 1000;
     }
-
+    
     render () {
         const {hours, minutes, seconds} = this.state;
         return (
             <div className="Clock">
+                <div className="carets">
+                    <button onClick={this.onClick}><i className="fa fa-caret-up fa-3x"></i></button>
+                    <button onClick={this.onClick}><i className="fa fa-caret-up fa-3x"></i></button>
+                    <button onClick={this.onClick}><i className="fa fa-caret-up fa-3x"></i></button>
+                </div>
                 <h1>
                     { hours>9 ? hours: `0${hours}` }: 
                     { minutes>9 ? minutes: `0${minutes}` }: 
                     { seconds>9 ? seconds: `0${seconds}` }
                 </h1>
-            </div>
-        )
-    }
-}
-
-class Footer extends Component {
-    render() {
-        return (
-            <div className="Footer">
-                <a href="" ><i className="fa fa-undo fa-2x"></i></a>
-                <a href="" className="play"><i className="fa fa-play fa-2x"></i></a>
-                <a href="" ><i className="fa fa-cog fa-2x"></i></a>
-                {/* <a href="" className="play"><i class="fa fa-pause fa-2x"></i></a> */}
-                {/* <a href="" ><i class="fa fa-save fa-2x"></i></a> */}
+                <div className="carets">
+                    <button onClick={this.onClick}><i className="fa fa-caret-down fa-3x"></i></button>
+                    <button onClick={this.onClick}><i className="fa fa-caret-down fa-3x"></i></button>
+                    <button onClick={this.onClick}><i className="fa fa-caret-down fa-3x"></i></button>
+                </div>
             </div>
         )
     }

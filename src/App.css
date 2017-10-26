@@ -28,6 +28,13 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    flex-flow: column;
+}
+.Clock .carets{
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
 }
 .Footer{
     position: absolute;
@@ -40,9 +47,15 @@
     justify-content: space-evenly;
     align-items: center;
 }
-.Footer a{
+.Clock button{
+    background-color: transparent;
+    border: none;
+    color: white;
+}
+.Footer button{
+    background-color: transparent;
+    border: none;
     color: #ff5722;
-    text-decoration: none;
 }
 .Footer .play{
     width: 3.5em;
