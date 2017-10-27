@@ -3,7 +3,6 @@ import React, { Component } from 'react';
 import './App.css'
 import './font-awesome/css/font-awesome.css'
 
-import Header from './Header.js'
 import Clock from './Clock.js'
 
 class App extends Component {
@@ -54,7 +53,7 @@ class App extends Component {
             this.stopTimer();
         }
 
-        if( flag === "reset"){
+        if(["reset", "set"].includes(flag)){
             this.setState(
                 {
                     hours: this.timeSet[0],
@@ -120,6 +119,66 @@ class App extends Component {
             case 'save': // save Clock duration and hide set buttons
                 this.setState({ flag: "save"}, this.control);
                 break;
+            case "hour+":
+                if(this.timeSet[0] < 25 ){
+                    this.timeSet[0]+=1;
+                }
+                if(this.timeSet[0] === 25 ){
+                    this.timeSet[0]=0;
+                }
+                this.setState({ hours: this.timeSet[0]});
+                break;
+            case "hour-":
+                if(this.timeSet[0] > -1 ){
+                    this.timeSet[0]-=1;
+                }
+                if(this.timeSet[0] === -1){
+                    this.timeSet[0]=24;
+                }
+                this.setState({ hours: this.timeSet[0]});
+                break;
+            case "minute+":
+                if(this.timeSet[1] < 60 ){
+                    this.timeSet[1]+=1;
+                }
+                if(this.timeSet[1] === 60 ){
+                    this.timeSet[1]=0;
+                }
+                this.setState({ minutes: this.timeSet[1]});
+                break;
+            case "minute-":
+                if(this.timeSet[1] > -1 ){
+                    this.timeSet[1]-=1;
+                }
+                if(this.timeSet[1] === -1 ){
+                    this.timeSet[1]=59;
+                }
+                this.setState({ minutes: this.timeSet[1]});
+                break;
+            case "second+":
+                if(this.timeSet[2] < 60 ){
+                    this.timeSet[2]+=1;
+                }
+                if(this.timeSet[2] === 60 ){
+                    this.timeSet[2]=0;
+                }
+                this.setState({ seconds: this.timeSet[2]});
+                break;
+            case "second-":
+                if(this.timeSet[2] > -1 ){
+                    this.timeSet[2]-=1;
+                }
+                if(this.timeSet[2] === -1 ){
+                    this.timeSet[2]=59;
+                }
+                this.setState({ seconds: this.timeSet[2]});
+                break;
+            case "pomodoro":
+                //do sth;
+                break;
+            case "break":
+                //do sth;
+                break;
             default:
                 this.setState({ flag: "play" }, this.control);
         }
@@ -129,14 +188,38 @@ class App extends Component {
         const flag = this.state.flag;
         return (
             <div className="App">
-                <Header />
-                <Clock
-                    time={[
-                        this.state.hours,
-                        this.state.minutes,
-                        this.state.seconds
-                    ]}
-                    flag={this.state.flag}/>
+                <div className="Header">
+                    <button onClick={this.handleClick} flag="pomodoro">POMODORO</button>
+                    <button onClick={this.handleClick} flag="break">BREAK</button>
+                </div>
+                { this.state.flag === "set"?
+                    <div>
+                        <div className="carets">
+                            <button onClick={this.handleClick} flag="hour+"><i className="fa fa-caret-up fa-3x" flag="hour+"></i></button>
+                            <button onClick={this.handleClick} flag="minute+"><i className="fa fa-caret-up fa-3x" flag="minute+"></i></button>
+                            <button onClick={this.handleClick} flag="second+"><i className="fa fa-caret-up fa-3x" flag="second+"></i></button>
+                        </div>
+                        <Clock
+                            time={[
+                                this.state.hours,
+                                this.state.minutes,
+                                this.state.seconds
+                            ]}
+                        />
+                        <div className="carets">
+                            <button onClick={this.handleClick} flag="hour-"><i className="fa fa-caret-down fa-3x" flag="hour-"></i></button>
+                            <button onClick={this.handleClick} flag="minute-"><i className="fa fa-caret-down fa-3x" flag="minute-"></i></button>
+                            <button onClick={this.handleClick} flag="second-"><i className="fa fa-caret-down fa-3x" flag="second-"></i></button>
+                        </div>
+                    </div> :
+                    <Clock
+                        time={[
+                            this.state.hours,
+                            this.state.minutes,
+                            this.state.seconds
+                        ]}
+                    />
+                }
                 <div className="Footer">
                     <button onClick={this.handleClick} className="reset" flag="reset"><i className="fa fa-undo fa-2x" flag="reset"></i></button>
                     { ["pause", "reset", "set", "save"].includes(flag) ?
